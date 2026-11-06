@@ -7,7 +7,7 @@ const MODELS = [
   {
     id: "lengkap",
     title: "Gambar Lengkap",
-    file: "models/full.glb",
+    file: "models/fullview.glb",
     thumb: "" // opsional, contoh: "thumbs/lantai-1.jpg"
   },
   {

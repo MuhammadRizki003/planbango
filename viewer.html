@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viewer 3D</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+</head>
+<body class="viewer">
+  <header class="bar">
+    <a class="btn ghost" href="index.html">← Kembali</a>
+    <h1 id="title">Memuat…</h1>
+  </header>
+  <div id="error"></div>
+  <model-viewer id="mv" camera-controls touch-action="pan-y" auto-rotate
+    shadow-intensity="1" exposure="1" ar></model-viewer>
+  <div class="info" id="info"></div>
+  <script src="models.js"></script>
+  <script>
+    const id = new URLSearchParams(location.search).get("id");
+    const m = MODELS.find(x => x.id === id);
+    const mv = document.getElementById("mv");
+    const err = document.getElementById("error");
+    if (!m) {
+      document.getElementById("title").textContent = "Tidak ditemukan";
+      mv.style.display = "none";
+      err.style.display = "block";
+      err.textContent = "Gambar tidak ditemukan. Silakan kembali ke halaman utama.";
+    } else {
+      document.title = m.title + " - Viewer 3D";
+      document.getElementById("title").textContent = m.title;
+      document.getElementById("info").textContent = m.desc || "";
+      mv.setAttribute("alt", m.title);
+      mv.src = m.file;
+      mv.addEventListener("error", () => {
+        mv.style.display = "none";
+        err.style.display = "block";
+        err.textContent = "File model belum ada: " + m.file + ". Upload file .glb ke folder models/.";
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gambaran 3D Proyek</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bar"><h1>Gambaran 3D Proyek</h1></header>
+  <main>
+    <p style="color:var(--muted)">Pilih gambar di bawah untuk melihat model 3D. Putar dengan satu jari, zoom dengan dua jari.</p>
+    <div class="grid" id="grid"></div>
+  </main>
+  <script src="models.js"></script>
+  <script>
+    const grid = document.getElementById("grid");
+    MODELS.forEach(m => {
+      const card = document.createElement("div");
+      card.className = "card";
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+      if (m.thumb) { const img = document.createElement("img"); img.src = m.thumb; img.alt = m.title; thumb.appendChild(img); }
+      else thumb.textContent = m.title;
+      const body = document.createElement("div");
+      body.className = "body";
+      const h = document.createElement("h2"); h.textContent = m.title;
+      const p = document.createElement("p"); p.textContent = m.desc || "";
+      const a = document.createElement("a");
+      a.className = "btn"; a.textContent = "Lihat 3D";
+      a.href = "viewer.html?id=" + encodeURIComponent(m.id);
+      body.append(h, p, a);
+      card.append(thumb, body);
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
